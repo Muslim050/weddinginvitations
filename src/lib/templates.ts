@@ -3,6 +3,9 @@ export type Template = {
   name: string;
   style: string;
   demoUrl: string;
+  preview: string;
+  previewWidth: number;
+  previewHeight: number;
   price: number;
   oldPrice?: number;
   description: string;
@@ -19,6 +22,9 @@ export const templates: Template[] = [
     name: "Chinor",
     style: "Классика · светлая и тёмная тема",
     demoUrl: "http://localhost:4321",
+    preview: "/previews/chinor.jpg",
+    previewWidth: 800,
+    previewHeight: 1411,
     price: 450000,
     oldPrice: 690000,
     description:
@@ -39,6 +45,9 @@ export const templates: Template[] = [
     name: "Nur",
     style: "Кинематографичная · тёмная",
     demoUrl: "http://localhost:3001",
+    preview: "/previews/nur.jpg",
+    previewWidth: 800,
+    previewHeight: 1411,
     price: 550000,
     oldPrice: 790000,
     description:
