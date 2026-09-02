@@ -8,6 +8,7 @@ import { VitePWA } from "vite-plugin-pwa";
 export default defineConfig({
   site: "https://wedding.zedlabs.id",
   integrations: [react(), sitemap()],
+  devToolbar: { enabled: false },
   output: "server",
   adapter: node({
     mode: "standalone",
@@ -53,9 +54,9 @@ export default defineConfig({
           ],
         },
         manifest: {
-          name: "The Wedding of Fera & Yahya",
-          short_name: "Fera & Yahya",
-          description: "Undangan Pernikahan Digital Fera & Yahya",
+          name: "Свадьба Жасурбека и Дилнозы",
+          short_name: "Жасурбек и Дилноза",
+          description: "Электронное приглашение на свадьбу",
           theme_color: "#020617",
           background_color: "#020617",
           display: "standalone",

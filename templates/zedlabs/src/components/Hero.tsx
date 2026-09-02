@@ -60,7 +60,7 @@ const Hero: React.FC<{ config: AppConfig }> = ({ config }) => {
             <div className="h-[1px] w-6 bg-white/30 md:w-20"></div>
           </div>
 
-          <h1 className="font-serif text-5xl leading-tight tracking-tight break-words text-white italic sm:text-7xl md:text-[9rem] md:leading-none">
+          <h1 className="text-balance font-serif text-[clamp(2.5rem,10vw,9rem)] leading-[1.05] tracking-tight break-words text-white italic">
             {config.couple.bride.name}
             <span className="text-accent/30 mx-2 md:mx-6">&</span>
             {config.couple.groom.name}

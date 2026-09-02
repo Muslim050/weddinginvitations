@@ -63,7 +63,7 @@ const Envelope: React.FC<EnvelopeProps> = ({ onOpen, config }) => {
               <span className="block text-[10px] font-light tracking-[0.5em] text-white/40 uppercase md:text-[12px]">
                 {t.envelope.weddingOf}
               </span>
-              <h1 className="font-serif text-6xl leading-none tracking-tighter text-white italic md:text-9xl">
+              <h1 className="relative left-1/2 w-[92vw] max-w-6xl -translate-x-1/2 text-balance font-serif text-[clamp(2.5rem,7vw,6.5rem)] leading-[1.05] tracking-tight text-white italic">
                 {config.couple.bride.name}
                 <span className="text-accent/30 mx-4 font-sans not-italic md:mx-8">
                   &

@@ -150,7 +150,7 @@ const App: React.FC = () => {
 
           <div className="space-y-8 text-center md:space-y-12">
             <Heart className="text-accent/60 mx-auto h-8 w-8 animate-pulse fill-current md:h-12 md:w-12" />
-            <h2 className="font-serif text-6xl leading-[0.85] tracking-tighter text-slate-900 italic drop-shadow-xl sm:text-8xl md:text-[12rem] dark:text-white">
+            <h2 className="text-balance font-serif text-[clamp(3rem,11vw,10rem)] leading-[0.95] tracking-tight text-slate-900 italic drop-shadow-xl dark:text-white">
               {config.couple.bride.name}{" "}
               <span className="text-accent/30">&</span>{" "}
               {config.couple.groom.name}
