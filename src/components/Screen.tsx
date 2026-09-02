@@ -25,6 +25,9 @@ export default function Screen({
         height={SHOT.height}
         sizes={sizes}
         priority={priority}
+        // Снимки уже сжаты и подогнаны по ширине — оптимизатор ничего не добавит,
+        // зато кэширует их по URL и отдаёт прежний кадр после пересъёмки.
+        unoptimized
         className="block h-auto w-full"
       />
     </PhoneFrame>
