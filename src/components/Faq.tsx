@@ -1,72 +1,59 @@
-import Reveal from "./Reveal";
+import { promises } from "@/lib/promises";
 
 const faq = [
   {
-    q: "Сколько времени занимает работа?",
-    a: "Один рабочий день с момента, когда вы прислали данные и фото. Если свадьба совсем скоро — сделаем за несколько часов, скажите об этом сразу.",
+    q: "А старшие родственники разберутся?",
+    a: "Приглашение открывается как обычная ссылка — ничего устанавливать не нужно. Для тех, кто не пользуется Telegram, делаем QR-код: его печатают на бумаге, человек наводит камеру телефона и попадает на то же приглашение.",
   },
   {
-    q: "Что нужно от меня?",
-    a: "Имена, дата, адреса никоха и тоя, тайминг дня, 5–10 фотографий и пара слов о вас. Мы пришлём короткую анкету — заполняется за 15 минут.",
+    q: "Что нужно от меня и сколько это займёт?",
+    a: `Имена, дата, адреса никоха и тоя, тайминг дня и несколько фотографий. Пришлю короткую анкету — заполняется за 15 минут. Черновик будет ${promises.draft}.`,
   },
   {
-    q: "Гость увидит своё имя лично?",
-    a: "Да. Каждому гостю можно сделать персональную ссылку — он открывает конверт и видит своё имя. Имя автоматически подставляется и в анкету.",
+    q: "Как понять, кто придёт?",
+    a: "Каждый гость отвечает прямо в приглашении: буду или не смогу, и сколько человек с ним. Ответы собираются в один список, вам приходит уведомление. Не нужно обзванивать и держать всё в тетради.",
   },
   {
-    q: "Можно на узбекском языке?",
-    a: "Оба шаблона двуязычные: гость нажимает одну кнопку и переключается между русским и узбекским. Тексты пишем на обоих языках.",
+    q: "Приглашение будет на узбекском?",
+    a: "На обоих языках сразу. Гость нажимает одну кнопку и читает по-узбекски или по-русски — это одно приглашение, а не два разных. Тексты пишем вместе с вами.",
   },
   {
-    q: "А если после отправки нужно что-то поменять?",
-    a: "Ссылка остаётся той же, а содержимое обновляется. Две правки входят в стоимость, дальше — по мелочи и бесплатно, если это опечатка.",
+    q: "А если после рассылки нужно что-то поменять?",
+    a: `Ссылка остаётся прежней, меняется содержимое — гостям ничего пересылать заново не нужно. ${promises.edits.charAt(0).toUpperCase() + promises.edits.slice(1)} входят в стоимость, опечатку поправлю и так.`,
   },
   {
-    q: "Сколько живёт ссылка?",
-    a: "От 6 до 12 месяцев в зависимости от тарифа. После свадьбы её можно продлить — многие оставляют как память с галереей и пожеланиями.",
-  },
-  {
-    q: "Гостям нужно что-то устанавливать?",
-    a: "Нет. Это обычная ссылка, открывается в любом браузере на любом телефоне. Приглашение можно добавить на главный экран, если хочется.",
-  },
-  {
-    q: "Как я узнаю, кто придёт?",
-    a: "Все ответы собираются в одном списке: кто придёт, со скольких людьми и что написал. Приходит уведомление в Telegram, список выгружается в таблицу.",
+    q: "Ссылка не пропадёт до свадьбы?",
+    a: `${promises.hosting.charAt(0).toUpperCase() + promises.hosting.slice(1)}, так что до свадьбы и долго после неё она работает. Ближе к концу срока напишу вам: продлеваем или отдаю архив, чтобы приглашение осталось у вас.`,
   },
 ];
 
 export default function Faq() {
   return (
-    <section id="faq" className="scroll-mt-24 py-20 sm:py-28">
-      <div className="mx-auto grid max-w-6xl gap-14 px-5 sm:px-8 lg:grid-cols-[0.8fr_1.2fr]">
-        <Reveal>
+    <section id="faq" className="scroll-mt-20 py-16 sm:py-24">
+      <div className="mx-auto grid max-w-6xl gap-10 px-5 sm:px-8 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+        <div>
           <span className="eyebrow inline-flex items-center gap-3 text-bronze">
             <span className="rule" />
             Вопросы
           </span>
-          <h2 className="mt-5 font-display text-5xl leading-tight sm:text-6xl">
-            Что обычно спрашивают
+          <h2 className="mt-5 font-display text-[clamp(1.9rem,6vw,3.4rem)] leading-tight">
+            Что спрашивают чаще всего
           </h2>
-          <p className="mt-5 text-ash">
-            Не нашли ответ? Напишите в Telegram — отвечаем быстро и без скриптов.
-          </p>
-        </Reveal>
+        </div>
 
-        <Reveal delay={100}>
-          <div className="divide-y divide-sand border-y border-sand">
-            {faq.map((item) => (
-              <details key={item.q} className="group py-5">
-                <summary className="flex cursor-pointer list-none items-start justify-between gap-6 font-display text-2xl leading-snug marker:content-none">
-                  {item.q}
-                  <span className="mt-2 flex h-6 w-6 flex-none items-center justify-center rounded-full border border-sand text-muted transition-transform group-open:rotate-45">
-                    +
-                  </span>
-                </summary>
-                <p className="mt-3 max-w-2xl text-ash">{item.a}</p>
-              </details>
-            ))}
-          </div>
-        </Reveal>
+        <div className="divide-y divide-sand border-y border-sand">
+          {faq.map((item) => (
+            <details key={item.q} className="group py-5">
+              <summary className="flex cursor-pointer list-none items-start justify-between gap-6 py-1 font-display text-2xl leading-snug marker:content-none">
+                {item.q}
+                <span className="mt-1.5 flex h-7 w-7 flex-none items-center justify-center rounded-full border border-sand text-muted transition-transform group-open:rotate-45">
+                  +
+                </span>
+              </summary>
+              <p className="mt-3 max-w-2xl leading-relaxed text-ash">{item.a}</p>
+            </details>
+          ))}
+        </div>
       </div>
     </section>
   );

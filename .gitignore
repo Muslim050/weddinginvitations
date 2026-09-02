@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# пример переменных лендинга должен попадать в репозиторий (только корневой)
+!/.env.example

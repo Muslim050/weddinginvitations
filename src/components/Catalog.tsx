@@ -1,128 +1,129 @@
-import Reveal from "./Reveal";
-import TemplatePreview from "./TemplatePreview";
-import { templates, upcoming } from "@/lib/templates";
+"use client";
+
+import { useState } from "react";
+import Screen from "./Screen";
+import { shots } from "@/lib/shots";
+import { templates, type Template } from "@/lib/templates";
 import { price } from "@/lib/site";
 
 export default function Catalog() {
-  return (
-    <section id="templates" className="scroll-mt-24 border-t border-sand bg-cream/40 py-20 sm:py-28">
-      <div className="mx-auto max-w-6xl px-5 sm:px-8">
-        <Reveal className="max-w-2xl">
-          <span className="eyebrow inline-flex items-center gap-3 text-bronze">
-            <span className="rule" />
-            Каталог
-          </span>
-          <h2 className="mt-5 font-display text-5xl leading-tight sm:text-6xl">
-            Два дизайна. Оба — живые сайты, а не картинки
-          </h2>
-          <p className="mt-5 text-lg text-ash">
-            Откройте демо с телефона: так же его увидят ваши гости. Мы заменим имена,
-            дату, фото и адрес — структура останется той же.
-          </p>
-        </Reveal>
+  const [full, setFull] = useState<Template | null>(null);
 
-        <div className="mt-14 grid gap-8 lg:grid-cols-2">
-          {templates.map((t, i) => (
-            <Reveal key={t.slug} delay={i * 120}>
-              <article className="group h-full overflow-hidden rounded-3xl border border-sand bg-ivory transition-shadow hover:shadow-[0_40px_80px_-40px_rgba(23,19,15,0.35)]">
-                <div
-                  className="relative flex justify-center px-8 pt-12 pb-0"
-                  style={{ background: t.panel }}
-                >
-                  {t.badge && (
-                    <span
-                      className="absolute left-6 top-6 rounded-full px-3 py-1 text-[0.65rem] font-semibold tracking-[0.15em] uppercase"
-                      style={{ background: t.accent, color: t.badgeInk }}
-                    >
-                      {t.badge}
-                    </span>
-                  )}
-                  <div className="w-[16.5rem] translate-y-6 transition-transform duration-700 group-hover:translate-y-2">
-                    <TemplatePreview template={t} />
+  return (
+    <section id="templates" className="scroll-mt-20 border-t border-sand bg-cream/40 py-16 sm:py-24">
+      <div className="mx-auto max-w-6xl px-5 sm:px-8">
+        <span className="eyebrow inline-flex items-center gap-3 text-bronze">
+          <span className="rule" />
+          Два шаблона
+        </span>
+        <h2 className="mt-5 max-w-2xl font-display text-[clamp(1.9rem,6vw,3.4rem)] leading-tight">
+          Выберите характер вечера
+        </h2>
+        <p className="mt-4 max-w-xl text-lg text-ash">
+          Имена, дата, фотографии и адреса будут ваши. Структура останется той же.
+        </p>
+
+        <div className="mt-10 grid gap-6 lg:grid-cols-2">
+          {templates.map((t) => (
+            <article
+              key={t.slug}
+              className="flex h-full flex-col overflow-hidden rounded-3xl border border-sand bg-ivory"
+            >
+              <div
+                className="flex justify-center px-8 pt-10 pb-0"
+                style={{ background: t.panel }}
+              >
+                <div className="w-[14rem] translate-y-5">
+                  <Screen
+                    shot={t.slug === "chinor" ? shots.chinorHero : shots.nurWelcome}
+                    glow={false}
+                    sizes="(max-width: 640px) 60vw, 224px"
+                  />
+                </div>
+              </div>
+
+              <div className="flex flex-1 flex-col p-6 sm:p-8">
+                <div className="flex items-baseline justify-between gap-4">
+                  <div>
+                    <h3 className="font-display text-3xl">{t.name}</h3>
+                    <p className="mt-1 text-xs tracking-[0.16em] uppercase text-muted">
+                      {t.style}
+                    </p>
+                  </div>
+                  <div className="font-display text-2xl whitespace-nowrap text-bronze">
+                    {price(t.price)}
                   </div>
                 </div>
 
-                <div className="p-7 sm:p-9">
-                  <div className="flex items-baseline justify-between gap-4">
-                    <div>
-                      <h3 className="font-display text-3xl">{t.name}</h3>
-                      <p className="mt-1 text-xs tracking-[0.18em] uppercase text-muted">
-                        {t.style}
-                      </p>
-                    </div>
-                    <div className="text-right">
-                      {t.oldPrice && (
-                        <div className="text-sm text-muted line-through">
-                          {price(t.oldPrice)}
-                        </div>
-                      )}
-                      <div className="font-display text-2xl text-bronze">
-                        {price(t.price)}
-                      </div>
-                    </div>
-                  </div>
+                <p className="mt-4 text-ash">{t.description}</p>
 
-                  <p className="mt-4 text-ash">{t.description}</p>
+                <ul className="mt-5 flex flex-wrap gap-2">
+                  {t.features.map((f) => (
+                    <li
+                      key={f}
+                      className="rounded-full border border-sand bg-cream/60 px-3 py-1.5 text-xs text-ash"
+                    >
+                      {f}
+                    </li>
+                  ))}
+                </ul>
 
-                  <ul className="mt-6 flex flex-wrap gap-2">
-                    {t.features.map((f) => (
-                      <li
-                        key={f}
-                        className="rounded-full border border-sand bg-cream/60 px-3 py-1.5 text-xs text-ash"
-                      >
-                        {f}
-                      </li>
-                    ))}
-                  </ul>
-
-                  <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+                  {t.demoUrl ? (
                     <a
                       href={t.demoUrl}
                       target="_blank"
                       rel="noreferrer"
                       className="flex-1 rounded-full bg-ink px-6 py-3.5 text-center text-sm font-medium text-ivory transition-transform hover:-translate-y-0.5"
                     >
-                      Смотреть демо
+                      Открыть демо
                     </a>
-                    <a
-                      href="#order"
-                      className="flex-1 rounded-full border border-ink/20 px-6 py-3.5 text-center text-sm font-medium transition-colors hover:border-ink hover:bg-cream"
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => setFull(t)}
+                      className="flex-1 rounded-full bg-ink px-6 py-3.5 text-center text-sm font-medium text-ivory transition-transform hover:-translate-y-0.5"
                     >
-                      Заказать
-                    </a>
-                  </div>
+                      Показать на весь экран
+                    </button>
+                  )}
+                  <a
+                    href="#order"
+                    className="flex-1 rounded-full border border-ink/20 px-6 py-3.5 text-center text-sm font-medium transition-colors hover:border-ink hover:bg-cream"
+                  >
+                    Хочу такой
+                  </a>
                 </div>
-              </article>
-            </Reveal>
+              </div>
+            </article>
           ))}
         </div>
-
-        <Reveal delay={120}>
-          <div className="mt-8 grid gap-4 sm:grid-cols-3">
-            {upcoming.map((u) => (
-              <div
-                key={u.name}
-                className="rounded-2xl border border-dashed border-sand bg-ivory/60 px-6 py-7"
-              >
-                <div className="flex items-center justify-between">
-                  <h4 className="font-display text-2xl text-muted">{u.name}</h4>
-                  <span className="rounded-full bg-cream px-2.5 py-1 text-[0.6rem] font-semibold tracking-[0.15em] uppercase text-bronze">
-                    {u.eta}
-                  </span>
-                </div>
-                <p className="mt-2 text-sm text-muted">{u.style}</p>
-              </div>
-            ))}
-          </div>
-          <p className="mt-6 text-center text-sm text-muted">
-            Каталог пополняется. Нужен дизайн, которого пока нет?{" "}
-            <a href="#order" className="text-bronze underline underline-offset-4">
-              Напишите — соберём под вас
-            </a>
-            .
-          </p>
-        </Reveal>
       </div>
+
+      {/* Демо ещё не выложено — показываем макет на весь экран, не уводя со страницы */}
+      {full && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={`Приглашение ${full.name}`}
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-ink/80 p-4 backdrop-blur-sm"
+          onClick={() => setFull(null)}
+        >
+          <div className="w-full max-w-[19rem]" onClick={(e) => e.stopPropagation()}>
+            <Screen
+              shot={full.slug === "chinor" ? shots.chinorHero : shots.nurWelcome}
+              sizes="304px"
+            />
+            <button
+              type="button"
+              onClick={() => setFull(null)}
+              className="mx-auto mt-5 block rounded-full bg-ivory px-6 py-2.5 text-sm font-medium text-ink"
+            >
+              Закрыть
+            </button>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
