@@ -8,12 +8,6 @@ export type Template = {
   demoUrl: string;
   price: number;
   description: string;
-  /** Тёмный шаблон — влияет на палитру живого макета. */
-  dark: boolean;
-  accent: string;
-  paper: string;
-  ink: string;
-  muted: string;
   /** Подложка карточки в каталоге. */
   panel: string;
   features: string[];
@@ -28,12 +22,7 @@ export const templates: Template[] = [
     price: PRICES.chinor,
     description:
       "Спокойная классика для никоха и тоя: конверт с именем гостя, таймер, история пары, карта и книга пожеланий.",
-    dark: false,
-    accent: "#a97a3f",
-    paper: "#fbf8f3",
-    ink: "#1b1712",
-    muted: "#8a7f73",
-    panel: "linear-gradient(180deg,#f3e9d9 0%,#e8dcc7 100%)",
+    panel: "linear-gradient(180deg,#1c2440 0%,#0d1120 100%)",
     features: ["Светлая и тёмная тема", "Анкета гостя", "QR для гостей", "Панель управления"],
   },
   {
@@ -44,11 +33,6 @@ export const templates: Template[] = [
     price: PRICES.nur,
     description:
       "Полноэкранные вертикальные слайды, видео-история и онлайн-трансляция. Смотрится дорого на телефоне.",
-    dark: true,
-    accent: "#cda56d",
-    paper: "#121011",
-    ink: "#f6f1e8",
-    muted: "#9d938a",
     panel: "linear-gradient(180deg,#221d19 0%,#131110 100%)",
     features: ["Тёмная тема", "Полноэкранные слайды", "Видео и трансляция", "Пожелания гостей"],
   },
