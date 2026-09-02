@@ -27,17 +27,12 @@ export default function Catalog() {
               <article className="group h-full overflow-hidden rounded-3xl border border-sand bg-ivory transition-shadow hover:shadow-[0_40px_80px_-40px_rgba(23,19,15,0.35)]">
                 <div
                   className="relative flex justify-center px-8 pt-12 pb-0"
-                  style={{
-                    background:
-                      t.slug === "nur"
-                        ? "linear-gradient(180deg,#211d18 0%,#14120f 100%)"
-                        : "linear-gradient(180deg,#f1e9dd 0%,#faf7f2 100%)",
-                  }}
+                  style={{ background: t.panel }}
                 >
                   {t.badge && (
                     <span
                       className="absolute left-6 top-6 rounded-full px-3 py-1 text-[0.65rem] font-semibold tracking-[0.15em] uppercase"
-                      style={{ background: t.accent, color: t.slug === "nur" ? "#14120f" : "#fff" }}
+                      style={{ background: t.accent, color: t.badgeInk }}
                     >
                       {t.badge}
                     </span>

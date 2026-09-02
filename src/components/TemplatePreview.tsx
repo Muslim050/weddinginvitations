@@ -17,12 +17,10 @@ export default function TemplatePreview({
   priority?: boolean;
   sizes?: string;
 }) {
-  const dark = template.slug === "nur";
-
   return (
     <div
       className={`relative overflow-hidden rounded-[2rem] border shadow-[0_30px_70px_-30px_rgba(23,19,15,0.45)] ${
-        dark ? "border-white/10" : "border-sand"
+        template.dark ? "border-white/10" : "border-sand"
       } ${className}`}
       style={{ background: template.bg }}
     >

@@ -12,6 +12,12 @@ export type Template = {
   accent: string;
   bg: string;
   ink: string;
+  /** тёмная подложка — влияет на рамку превью */
+  dark: boolean;
+  /** цвет текста бейджа: подбирается под accent, а не под подложку */
+  badgeInk: string;
+  /** подложка под телефоном в карточке каталога */
+  panel: string;
   badge?: string;
   features: string[];
 };
@@ -22,7 +28,7 @@ export const templates: Template[] = [
     name: "Chinor",
     style: "Классика · светлая и тёмная тема",
     demoUrl: "http://localhost:4321",
-    preview: "/previews/chinor.jpg",
+    preview: "/previews/chinor-hero.jpg",
     previewWidth: 800,
     previewHeight: 1411,
     price: 450000,
@@ -30,8 +36,11 @@ export const templates: Template[] = [
     description:
       "Спокойная классика для никоха и тоя: конверт с именем гостя, таймер, история пары, карта, анкета и книга пожеланий. Есть админка — меняете текст и фото сами.",
     accent: "#a97a3f",
-    bg: "#faf7f2",
+    bg: "#0d1120",
     ink: "#17130f",
+    dark: true,
+    badgeInk: "#fff",
+    panel: "linear-gradient(180deg,#1c2440 0%,#0d1120 100%)",
     badge: "Хит продаж",
     features: [
       "Русский и узбекский",
@@ -45,7 +54,7 @@ export const templates: Template[] = [
     name: "Nur",
     style: "Кинематографичная · тёмная",
     demoUrl: "http://localhost:3001",
-    preview: "/previews/nur.jpg",
+    preview: "/previews/nur-welcome.jpg",
     previewWidth: 800,
     previewHeight: 1411,
     price: 550000,
@@ -55,6 +64,9 @@ export const templates: Template[] = [
     accent: "#c9a06a",
     bg: "#14120f",
     ink: "#f4efe6",
+    dark: true,
+    badgeInk: "#14120f",
+    panel: "linear-gradient(180deg,#211d18 0%,#14120f 100%)",
     badge: "Новинка",
     features: [
       "Русский и узбекский",
