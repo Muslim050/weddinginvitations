@@ -38,4 +38,8 @@ export const shots = {
     src: "/shots/nur-date.jpg",
     alt: "Приглашение Nur: дата, никох и той с адресами",
   },
+  nafisHero: {
+    src: "/shots/nafis-hero.jpg",
+    alt: "Приглашение Nafis: акварельный свиток с именами молодожёнов",
+  },
 } as const satisfies Record<string, Shot>;

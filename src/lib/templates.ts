@@ -2,7 +2,7 @@ import { PRICES } from "./pricing";
 import { shots, type Shot } from "./shots";
 
 export type Template = {
-  slug: "chinor" | "nur";
+  slug: "chinor" | "nur" | "nafis";
   name: string;
   style: string;
   /** Публичный адрес демо. Пустая строка = демо ещё не выложено. */
@@ -43,6 +43,18 @@ export const templates: Template[] = [
     panel: "linear-gradient(180deg,#221d19 0%,#131110 100%)",
     features: ["Тёмная тема", "Полноэкранные слайды", "Видео и трансляция", "Пожелания гостей"],
     gallery: [shots.nurWelcome, shots.nurDate],
+  },
+  {
+    slug: "nafis",
+    name: "Nafis",
+    style: "Акварельный · нежная ботаника",
+    demoUrl: process.env.NEXT_PUBLIC_DEMO_NAFIS || "/demo/nafis/index.html",
+    price: PRICES.nafis,
+    description:
+      "Нежное приглашение с раскрывающимся свитком, музыкой, программой вечера, календарём и анкетой гостя.",
+    panel: "linear-gradient(180deg,#f3e9e5 0%,#d7c0b7 100%)",
+    features: ["Анимация свитка", "Фоновая музыка", "Русский и узбекский", "Календарь и RSVP"],
+    gallery: [shots.nafisHero],
   },
 ];
 

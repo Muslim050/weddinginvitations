@@ -4,12 +4,12 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import Screen from "./Screen";
 import LiveScreen from "./LiveScreen";
-import { shots } from "@/lib/shots";
 import { templates, type Template } from "@/lib/templates";
 import { price } from "@/lib/site";
 
 export default function Catalog() {
   const [full, setFull] = useState<Template | null>(null);
+  const [live, setLive] = useState(false);
 
   // Пока открыт просмотр, страница под ним не должна уезжать вместе с пальцем.
   useEffect(() => {
@@ -29,7 +29,7 @@ export default function Catalog() {
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         <span className="eyebrow inline-flex items-center gap-3 text-bronze">
           <span className="rule" />
-          Два шаблона
+          Три шаблона
         </span>
         <h2 className="mt-5 max-w-2xl font-display text-[clamp(1.9rem,6vw,3.4rem)] leading-tight">
           Выберите характер вечера
@@ -38,7 +38,7 @@ export default function Catalog() {
           Имена, дата, фотографии и адреса будут ваши. Структура останется той же.
         </p>
 
-        <div className="mt-10 grid gap-6 lg:grid-cols-2">
+        <div className="mt-10 grid gap-6 lg:grid-cols-3">
           {templates.map((t) => (
             <article
               key={t.slug}
@@ -50,7 +50,7 @@ export default function Catalog() {
               >
                 <div className="w-[14rem] translate-y-5">
                   <Screen
-                    shot={t.slug === "chinor" ? shots.chinorHero : shots.nurWelcome}
+                    shot={t.gallery[0]}
                     glow={false}
                     sizes="(max-width: 640px) 60vw, 224px"
                   />
@@ -130,6 +130,7 @@ export default function Catalog() {
               src={full.demoUrl}
               title={`Живое приглашение ${full.name}`}
               fallback={full.gallery[0]}
+              onLive={setLive}
               sizes="304px"
               className="w-full"
             />
@@ -140,12 +141,12 @@ export default function Catalog() {
             onClick={(e) => e.stopPropagation()}
           >
             <p className="text-xs text-ivory/60">
-              {full.demoUrl
+              {live
                 ? "Это настоящее приглашение — листайте и нажимайте"
-                : "Демо ещё не выложено — это снимок шаблона"}
+                : "Демо сейчас недоступно — это снимок шаблона"}
             </p>
             <div className="flex items-center gap-3">
-              {full.demoUrl && (
+              {live && (
                 <a
                   href={full.demoUrl}
                   target="_blank"

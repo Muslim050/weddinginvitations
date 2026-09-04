@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="uz">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+    <title>Azizbek va Madina — taklifnoma</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💌</text></svg>" />
+
+    <!-- The two faces the first screen is set in. Without these the browser
+         only discovers them after the stylesheet parses, which costs a round
+         trip on exactly the screen the visitor is waiting on. -->
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/LTRemark-Regular.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/GoodVibesPro-Regular.woff2" crossorigin />
+
+    <!--
+      The scroll hint belongs to the finished hero, not to the preloader. This
+      is inlined rather than left to the stylesheet so it applies while the HTML
+      is still parsing: the bundle arrives later — in dev only once the module
+      has run — which was long enough to flash the label and arrow over the
+      preloader before hiding them again.
+
+      Class selectors, at the same specificity as the stylesheet's own, so the
+      `.preloader--finished` rules still win and reveal the hint on cue.
+    -->
+    <style>
+      .preloader__scroll p,
+      .preloader__scroll img,
+      .preloader__card {
+        opacity: 0;
+      }
+    </style>
+    <script type="module" crossorigin src="/assets/index-DaSG5ouH.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-Sbwp2-9V.css">
+  </head>
+  <body>
+    <header class="site-header" id="site-header">
+      <p class="site-header__title" data-i18n="header.title">Taklifnoma</p>
+      <div class="site-header__tools">
+        <button class="site-header__sound" id="sound-toggle" type="button" aria-label="Musiqani yoqish yoki o’chirish" data-i18n-attr="aria-label:header.sound" aria-pressed="true" disabled>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0.25" y="0.25" width="23.5" height="23.5" rx="11.75" stroke="black" stroke-width="0.5"/>
+          <clipPath id="sound-wave-clip">
+            <rect x="7" y="9.5" width="10" height="5" />
+          </clipPath>
+          <g clip-path="url(#sound-wave-clip)">
+            <path class="site-header__sound-wave" d="M7,12 C7.625,10.7 8.875,10.7 9.5,12 C10.125,13.3 11.375,13.3 12,12 C12.625,10.7 13.875,10.7 14.5,12 C15.125,13.3 16.375,13.3 17,12 C17.625,10.7 18.875,10.7 19.5,12 C20.125,13.3 21.375,13.3 22,12" stroke="black" stroke-width="0.5" stroke-linecap="round" fill="none"/>
+          </g>
+        </svg>
+        </button>
+
+        <div class="lang" id="lang">
+          <button class="lang__button" id="lang-button" type="button" aria-haspopup="listbox" aria-expanded="false" aria-label="Tilni o’zgartirish" data-i18n-attr="aria-label:header.language">
+            <!-- Each icon sits centred in the box the design gives it rather
+                 than filling it: the artwork is smaller than its frame, and
+                 stretching it to the frame is what made it look heavy. -->
+            <span class="lang__icon lang__icon--globe"><img src="/icons/globe.svg" alt="" /></span>
+            <span class="lang__code" id="lang-code">UZ</span>
+            <span class="lang__icon lang__icon--chevron"><img src="/icons/chevron-down.svg" alt="" /></span>
+          </button>
+          <ul class="lang__menu" id="lang-menu" role="listbox">
+            <li><button class="lang__option" type="button" role="option" aria-selected="true" data-lang="uz">UZ</button></li>
+            <li><button class="lang__option" type="button" role="option" aria-selected="false" data-lang="ru">РУ</button></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <section class="preloader" id="preloader">
+      <!--
+        The `poster` is the video's own first frame, and it is not a nicety:
+        this screen has no background of its own, so a phone that declines to
+        preload the video (iOS reads `preload="auto"` as `none`) would otherwise
+        show a blank page until the tap. Regenerate both with
+        `npm run build:preloader`.
+      -->
+      <video
+        class="preloader__video"
+        id="preloader-video"
+        src="/preloader/scroll.mp4"
+        poster="/preloader/scroll.webp"
+        muted
+        playsinline
+        preload="auto"
+      ></video>
+
+      <!--
+        The words on the scroll. The clip unrolls a blank one and stops, and
+        these are set over it in HTML rather than filmed into it — which is what
+        lets a name or a date be corrected without re-shooting the video, and
+        what lets one clip serve both languages.
+
+        Laid out on the design's 375x720 canvas, in units of the video's own
+        rendered height; the stylesheet explains how that height is arrived at.
+      -->
+      <div class="preloader__card" id="preloader-card" aria-hidden="true">
+        <p class="preloader__card-label" data-i18n="preloader.label">TO’Y KUNI</p>
+        <p class="preloader__card-name preloader__card-name--first" data-i18n="preloader.groom">Azizbek</p>
+        <p class="preloader__card-amp">&amp;</p>
+        <p class="preloader__card-name preloader__card-name--second" data-i18n="preloader.bride">Madina</p>
+        <p class="preloader__card-date" data-i18n="preloader.date">05.09.26</p>
+      </div>
+      <div class="preloader__hint" id="preloader-hint">
+        <img class="preloader__chevron" src="/icons/Chevron_Up_Duo.svg" alt="" />
+        <button class="preloader__click" id="preloader-click" type="button">
+          <span data-i18n="preloader.click">Bosing</span>
+          <img class="preloader__click-ring" src="/icons/click-ring.svg" alt="" />
+        </button>
+      </div>
+      <div class="preloader__scroll" id="preloader-scroll">
+        <!-- Six stacked sheets, each blurring harder than the one above it, so
+             the hero dissolves into the label instead of meeting it at a seam.
+             Presentational only — the stylesheet gives each sheet its radius. -->
+        <div class="preloader__blur" aria-hidden="true">
+          <div></div><div></div><div></div><div></div><div></div><div></div>
+        </div>
+        <p data-i18n="preloader.scroll">Pastga suring</p>
+        <img src="/icons/Arrows.svg" alt="" />
+      </div>
+    </section>
+
+    <div class="letter-stage" id="letter-stage">
+      <div class="letter-stage__pin">
+        <section class="greeting" id="greeting">
+          <p class="greeting__label" data-i18n="greeting.label">Bizning to’y kunimiz</p>
+          <h2 class="greeting__title" data-i18n="greeting.title">Aziz mehmon !</h2>
+          <canvas class="greeting__envelope" id="letter-canvas" role="img" aria-label="Ochilib, taklifnomani ko’rsatadigan konvert" data-i18n-attr="aria-label:greeting.envelope"></canvas>
+          <img class="greeting__divider" src="/icons/divider.png" alt="" loading="lazy" decoding="async" />
+        </section>
+      </div>
+    </div>
+
+    <section class="bouquet" id="bouquet">
+      <img class="bouquet__paper" src="/icons/bouquet-paper.webp" alt="" loading="lazy" decoding="async" />
+      <div class="bouquet__flowers" id="bouquet-flowers">
+        <img class="bouquet__flowers-image" src="/icons/bouquet.webp" alt="" loading="lazy" decoding="async" />
+      </div>
+      <div class="bouquet__date" id="bouquet-date">
+        <p class="bouquet__label" data-i18n="bouquet.label">To’y sanasi</p>
+        <h2 class="bouquet__title" data-i18n="bouquet.title">Qachon?</h2>
+        <div class="bouquet__when">
+          <span class="bouquet__when-part" data-i18n="bouquet.month">sentabr</span>
+          <span class="bouquet__when-day">5</span>
+          <span class="bouquet__when-part bouquet__when-part--time" data-i18n="bouquet.time">18:00</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="timeline" id="timeline">
+      <div class="timeline__pin">
+        <div class="timeline__frame" id="timeline-frame">
+          <h2 class="timeline__title" data-i18n="timeline.title">Dastur</h2>
+
+          <!-- The line carries its own dots, one per stop; `data-reach` below is
+               each dot's height on the design's canvas, which is what tells a
+               stop when the lock has drawn level with it. -->
+          <img class="timeline__line" src="/icons/timeline-line.svg" alt="" loading="lazy" decoding="async" />
+          <img class="timeline__lock" id="timeline-lock" src="/icons/timeline-lock.webp" alt="" loading="lazy" decoding="async" />
+
+          <!-- Every stop's words are `data-i18n-html`: the columns are narrow,
+               and where a line has to break is a question each language answers
+               differently, so the dictionary breaks them rather than leaving it
+               to whatever width the box happens to have. -->
+          <ol class="timeline__stops" id="timeline-stops">
+            <li class="timeline__stop timeline__stop--right" style="top: 162px" data-reach="203">
+              <p class="timeline__hour" data-i18n="timeline.1.hour">18:00</p>
+              <p class="timeline__what" data-i18n-html="timeline.1.what">Mehmonlar yig’ilishi</p>
+            </li>
+            <li class="timeline__stop timeline__stop--left" style="top: 265px" data-reach="307">
+              <p class="timeline__hour" data-i18n="timeline.2.hour">19:00</p>
+              <p class="timeline__what" data-i18n-html="timeline.2.what">To’y oqshomi dasturi</p>
+            </li>
+            <li class="timeline__stop timeline__stop--right" style="top: 351px" data-reach="411">
+              <p class="timeline__hour" data-i18n="timeline.3.hour">20:00</p>
+              <p class="timeline__what" data-i18n-html="timeline.3.what">Yulduz<br />san’atkorlarning<br />dasturi</p>
+            </li>
+            <li class="timeline__stop timeline__stop--left" style="top: 473px" data-reach="515">
+              <p class="timeline__hour" data-i18n="timeline.4.hour">22:00</p>
+              <p class="timeline__what" data-i18n-html="timeline.4.what">DJ dasturi</p>
+            </li>
+            <li class="timeline__stop timeline__stop--right" style="top: 559px" data-reach="619">
+              <p class="timeline__hour" data-i18n="timeline.5.hour">22:30</p>
+              <p class="timeline__what" data-i18n-html="timeline.5.what">Kechaning yakuni</p>
+            </li>
+          </ol>
+
+          <div class="timeline__car">
+            <img src="/icons/timeline-car.webp" alt="" loading="lazy" decoding="async" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="location" id="location" data-reveal-group>
+      <p class="location__label" data-reveal data-i18n="location.label">Qayerda?</p>
+      <h2 class="location__title" data-reveal data-i18n="location.title">Manzil</h2>
+
+      <!--
+        The printed address is translated, but the map is searched with
+        `data-maps-query` — one string, the same in both languages. A search
+        typed in Russian finds this place worse than its own name does, and the
+        link would otherwise change meaning with the switcher. Editing the
+        query is what re-aims the map.
+      -->
+      <div
+        class="location__address"
+        id="location-address"
+        data-reveal
+        data-maps-query="Osiyo Grand, Labzak ko’chasi 5, Toshkent"
+      >
+        <p data-i18n="location.venue">Osiyo Grand</p>
+        <p data-i18n="location.street">Labzak ko’chasi 5, Toshkent</p>
+      </div>
+
+      <div class="location__venue" data-reveal>
+        <img src="/icons/location-venue.webp" alt="To’y joyi" data-i18n-attr="alt:location.venueAlt" loading="lazy" decoding="async" />
+      </div>
+
+      <div class="location__actions" data-reveal>
+        <a
+          class="location__button"
+          id="location-directions"
+          href="https://yandex.uz/maps/?text=Osiyo%20Grand%2C%20Labzak%20ko%E2%80%99chasi%205%2C%20Toshkent"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img src="/icons/location-pin.svg" alt="" loading="lazy" decoding="async" />
+          <span data-i18n="location.directions">Yo’l ko’rsatish</span>
+        </a>
+
+        <button
+          class="location__button"
+          id="location-calendar"
+          type="button"
+          data-title="Azizbek va Madina — to’y" data-i18n-attr="data-title:location.event"
+          data-start="2026-09-05T18:00"
+          data-end="2026-09-05T22:30"
+        >
+          <img src="/icons/location-calendar.svg" alt="" loading="lazy" decoding="async" />
+          <span data-i18n="location.calendar">Kalendarga</span>
+        </button>
+      </div>
+
+      <img class="location__divider" src="/icons/divider.png" alt="" data-reveal loading="lazy" decoding="async" />
+    </section>
+
+    <section class="rsvp" id="rsvp" data-reveal-group>
+      <div class="rsvp__intro" data-reveal>
+        <h2 class="rsvp__title" data-i18n="rsvp.title">Ishtirokingizni tasdiqlang</h2>
+        <p class="rsvp__lead" data-i18n-html="rsvp.lead">Kela olasizmi,<br />bizga xabar bering.</p>
+      </div>
+
+      <!--
+        Answers go straight into a Google Sheet, through the Apps Script web app
+        in scripts/rsvp-endpoint.gs. To connect it, follow the steps at the top
+        of that file and paste the deployment URL into `action` below. Each
+        field's `name` is the column the script writes it to, so renaming one
+        here means renaming it there too.
+      -->
+      <form
+        class="rsvp__card rsvp__form"
+        id="rsvp-form"
+        action="https://script.google.com/macros/s/SCRIPT_ID/exec"
+        method="post"
+        data-attendance-field="attendance"
+        data-guest-field="guest"
+        data-reveal
+        novalidate
+      >
+        <fieldset class="rsvp__group">
+          <p class="rsvp__label" data-i18n="rsvp.question">Kela olasizmi?</p>
+          <div class="rsvp__choices">
+            <label class="rsvp__choice">
+              <input class="rsvp__radio" type="radio" name="attendance" value="Да" />
+              <span data-i18n="rsvp.yes">Ha, bajonidil!</span>
+            </label>
+            <label class="rsvp__choice">
+              <input class="rsvp__radio" type="radio" name="attendance" value="Нет" />
+              <span data-i18n="rsvp.no">Afsuski, kela olmayman.</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <div class="rsvp__group rsvp__group--name">
+          <label class="rsvp__label" for="rsvp-name" data-i18n="rsvp.name">Ismingiz va familiyangiz</label>
+          <input class="rsvp__field" id="rsvp-name" type="text" name="guest" autocomplete="name" placeholder="Ulug’bek" data-i18n-attr="placeholder:rsvp.namePlaceholder" />
+        </div>
+
+        <div class="rsvp__group">
+          <label class="rsvp__label" for="rsvp-message" data-i18n="rsvp.message">Tilak (ixtiyoriy)</label>
+          <textarea class="rsvp__field rsvp__field--message" id="rsvp-message" name="message" rows="3"></textarea>
+        </div>
+
+        <button class="rsvp__send" id="rsvp-send" type="submit" data-i18n="rsvp.send">Yuborish</button>
+        <p class="rsvp__status" id="rsvp-status" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <section class="final" id="final">
+      <img class="final__paper final__paper--buds" src="/icons/final-buds.webp" alt="" loading="lazy" decoding="async" />
+      <img class="final__paper final__paper--flowers" src="/icons/final-bloom.webp" alt="Gullar bilan bezatilgan qog’oz varaqasi" loading="lazy" decoding="async" />
+      <div class="final__text">
+        <p class="final__wish" data-i18n-html="final.wish">Bu kunni birga<br />o’tkazishdan xursand bo’lamiz.</p>
+        <p class="final__names" data-i18n="final.names">Azizbek &amp; Madina</p>
+      </div>
+    </section>
+
+    <footer class="site-footer" data-reveal-group>
+      <p class="site-footer__by" data-reveal>
+        <a class="site-footer__studio" href="/" target="_top">Nikoh Invitations</a>
+      </p>
+      <a class="site-footer__up" href="#preloader" aria-label="Yuqoriga" data-i18n-attr="aria-label:footer.up" data-reveal>
+        <img class="site-footer__ornament" src="/icons/footer-ornament.svg" alt="" loading="lazy" decoding="async" />
+      </a>
+    </footer>
+
+    <!-- `none`, not `auto`: the track is 1.4 MB and nothing plays it until the
+         visitor taps Click, so preloading it only starves the preloader video
+         of bandwidth on the one screen that is actually on show. -->
+    <audio id="bg-music" src="/music/wedding-music.mp3" loop preload="none"></audio>
+
+    <!-- Мост для показа приглашения в рамке телефона на лендинге. -->
+    <script src="tour-bridge.js" defer></script>
+  </body>
+</html>

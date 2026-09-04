@@ -8,6 +8,7 @@ import { useInView } from "react-intersection-observer";
 import CountdownTimer from "./Countdown";
 import Form from "./Form";
 import WishesList from "./WishesList";
+import TourBridge from "./TourBridge";
 import { getConfig } from "@/lib/config";
 import { useUi, useLang, formatFullDate, formatDate, formatWeekday } from "@/lib/i18n";
 
@@ -117,7 +118,12 @@ const WeddingScreen = ({ name }: WeddingScreenProps) => {
       </div>
 
       {/* Konten teks sisi kanan bisa scroll untuk pc */}
-      <div className=" md:w-1/3 h-full overflow-y-scroll snap-y snap-mandatory scroll-smooth">
+      <TourBridge opened={isOpen} onOpen={handleOpen} />
+
+      <div
+        id="invitationScroll"
+        className=" md:w-1/3 h-full overflow-y-scroll snap-y snap-mandatory scroll-smooth"
+      >
         <div
           id="backgroundWedding"
           className=" snap-start  w-full h-screen flex items-center justify-center "
@@ -324,6 +330,7 @@ const WeddingScreen = ({ name }: WeddingScreenProps) => {
             </div>
             {/* Slide 5 */}
             <div
+              id="event"
               className="snap-start  text-white h-screen flex flex-col items-center px-12 "
               style={{
                 backgroundImage: `url(/slide_5.jpg)`,
@@ -481,6 +488,7 @@ const WeddingScreen = ({ name }: WeddingScreenProps) => {
             {/* SLIDE 9 */}
             {config.rsvp.enabled && (
             <div
+              id="rsvp"
               className="snap-start text-white h-screen flex flex-col justify-center pt-16 pb-16 px-8"
               style={{
                 backgroundImage: `url(/slide_9.jpg)`,
@@ -506,6 +514,7 @@ const WeddingScreen = ({ name }: WeddingScreenProps) => {
 
             {/* SLIDE 10 */}
             <div
+              id="wishes"
               className="snap-start text-white h-screen flex flex-col justify-center pt-16 pb-16 px-8"
               style={{
                 backgroundImage: `url(/slide_9.jpg)`,

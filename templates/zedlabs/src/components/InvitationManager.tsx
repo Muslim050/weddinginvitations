@@ -309,7 +309,7 @@ const InvitationManager: React.FC<InvitationManagerProps> = ({ siteUrl }) => {
       currentTheme.textMain[1],
       currentTheme.textMain[2]
     );
-    doc.text(brideName, cx, 75, { align: "center" });
+    doc.text(groomName, cx, 75, { align: "center" });
     doc.setFont("times", "normal");
     doc.setFontSize(16);
     doc.setTextColor(
@@ -325,7 +325,7 @@ const InvitationManager: React.FC<InvitationManagerProps> = ({ siteUrl }) => {
       currentTheme.textMain[1],
       currentTheme.textMain[2]
     );
-    doc.text(groomName, cx, 105, { align: "center" });
+    doc.text(brideName, cx, 105, { align: "center" });
     doc.setDrawColor(
       currentTheme.secondary[0],
       currentTheme.secondary[1],
@@ -646,7 +646,7 @@ const InvitationManager: React.FC<InvitationManagerProps> = ({ siteUrl }) => {
       currentTheme.primary[1],
       currentTheme.primary[2]
     );
-    doc.text(`${brideName} & ${groomName}`, cx, closingY + 38, {
+    doc.text(`${groomName} & ${brideName}`, cx, closingY + 38, {
       align: "center",
     });
     doc.setDrawColor(

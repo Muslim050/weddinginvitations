@@ -36,8 +36,8 @@ const EventDetails: React.FC<{ config: AppConfig }> = ({ config }) => {
   ) => {
     const ev = config.events[eventType];
     const event = {
-      title: `${ev.title} ${config.couple.bride.name} & ${config.couple.groom.name}`,
-      description: `${t.event.calendarDesc}: ${ev.title} — ${config.couple.bride.name} & ${config.couple.groom.name}.`,
+      title: `${ev.title} ${config.couple.groom.name} & ${config.couple.bride.name}`,
+      description: `${t.event.calendarDesc}: ${ev.title} — ${config.couple.groom.name} & ${config.couple.bride.name}.`,
       location: config.venue.address,
       startTime: ev.startDateTime,
       endTime: ev.endDateTime,

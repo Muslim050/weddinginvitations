@@ -10,6 +10,7 @@ import Wishes from "./components/Wishes";
 import GiftInfo from "./components/GiftInfo";
 import MusicPlayer from "./components/MusicPlayer";
 import Navbar from "./components/Navbar";
+import TourBridge from "./components/TourBridge";
 import FloatingPetals from "./components/FloatingPetals";
 import Envelope from "./components/Envelope";
 import InstallPrompt from "./components/InstallPrompt";
@@ -20,7 +21,7 @@ const App: React.FC = () => {
   const { config, loading } = useConfig();
   const t = useT();
 
-  const [theme, setTheme] = useState<"light" | "dark">(() => {
+  const [theme] = useState<"light" | "dark">(() => {
     if (typeof window !== "undefined") {
       const saved = localStorage.getItem("theme") as "light" | "dark";
       if (saved) return saved;
@@ -79,9 +80,6 @@ const App: React.FC = () => {
     return () => observer.disconnect();
   }, [isOpened]);
 
-  const toggleTheme = () => {
-    setTheme((prev) => (prev === "light" ? "dark" : "light"));
-  };
 
   const handleOpenInvitation = () => {
     setIsOpened(true);
@@ -128,7 +126,8 @@ const App: React.FC = () => {
       </main>
 
       <MusicPlayer url={config.music.url} />
-      <Navbar theme={theme} toggleTheme={toggleTheme} />
+      <Navbar />
+      <TourBridge opened={isOpened} onOpen={handleOpenInvitation} />
 
       <footer className="dark:bg-darkSurface relative flex h-screen w-full flex-col items-center justify-center overflow-hidden bg-white px-6 transition-colors duration-1000">
         <div className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center opacity-10 dark:opacity-[0.05]">
@@ -151,9 +150,9 @@ const App: React.FC = () => {
           <div className="space-y-8 text-center md:space-y-12">
             <Heart className="text-accent/60 mx-auto h-8 w-8 animate-pulse fill-current md:h-12 md:w-12" />
             <h2 className="text-balance font-serif text-[clamp(3rem,11vw,10rem)] leading-[0.95] tracking-tight text-slate-900 italic drop-shadow-xl dark:text-white">
-              {config.couple.bride.name}{" "}
+              {config.couple.groom.name}{" "}
               <span className="text-accent/30">&</span>{" "}
-              {config.couple.groom.name}
+              {config.couple.bride.name}
             </h2>
             <div className="flex items-center justify-center gap-4 md:gap-6">
               <div className="bg-accent/30 h-[1px] w-10 md:w-20"></div>
@@ -182,7 +181,7 @@ const App: React.FC = () => {
                 {config.text.closing.signature}
               </p>
               <p className="font-serif text-lg italic">
-                {config.couple.bride.name} & {config.couple.groom.name}
+                {config.couple.groom.name} & {config.couple.bride.name}
               </p>
               <p className="mt-2 text-[10px]">{config.text.closing.family}</p>
             </div>

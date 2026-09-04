@@ -1,19 +1,19 @@
 "use client";
 
 import { useState } from "react";
-import Screen from "./Screen";
-import { shots } from "@/lib/shots";
+import LiveScreen from "./LiveScreen";
 import { price } from "@/lib/site";
 import { PRICES } from "@/lib/pricing";
 import { promises } from "@/lib/promises";
+import { templates } from "@/lib/templates";
 
-const views = {
-  Chinor: shots.chinorHero,
-  Nur: shots.nurWelcome,
-} as const;
+/** Витрина первого экрана: с чего начинается знакомство с продуктом. */
+const DEFAULT_SLUG = "nafis";
 
 export default function Hero() {
-  const [tpl, setTpl] = useState<keyof typeof views>("Chinor");
+  const [slug, setSlug] = useState<string>(DEFAULT_SLUG);
+  const [live, setLive] = useState(false);
+  const tpl = templates.find((t) => t.slug === slug) ?? templates[0];
 
   return (
     <section className="relative overflow-hidden pb-14 sm:pb-24">
@@ -66,29 +66,39 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Настоящий экран шаблона, а не рисунок */}
+        {/* Живой шаблон, а не рисунок и не снимок */}
         <div className="mx-auto w-full max-w-[18rem]">
-          <Screen shot={views[tpl]} priority sizes="(max-width: 640px) 68vw, 288px" />
+          <LiveScreen
+            src={tpl.demoUrl}
+            title={`Живое приглашение ${tpl.name}`}
+            fallback={tpl.gallery[0]}
+            onLive={setLive}
+            priority
+            eager
+            sizes="(max-width: 640px) 68vw, 288px"
+          />
 
           <div className="mt-4 flex items-center justify-center gap-2">
-            {(Object.keys(views) as (keyof typeof views)[]).map((name) => (
+            {templates.map((t) => (
               <button
-                key={name}
+                key={t.slug}
                 type="button"
-                onClick={() => setTpl(name)}
+                onClick={() => setSlug(t.slug)}
                 className={`rounded-full px-4 py-2 text-xs transition-colors ${
-                  name === tpl
+                  t.slug === tpl.slug
                     ? "bg-ink text-ivory"
                     : "border border-sand text-muted hover:border-ink/30"
                 }`}
               >
-                {name}
+                {t.name}
               </button>
             ))}
           </div>
 
           <p className="mt-3 text-center text-xs leading-relaxed text-muted">
-            Настоящий экран шаблона, снятый с телефона.
+            {live
+              ? "Это не картинка — настоящее приглашение. Листайте прямо здесь."
+              : "Настоящий экран шаблона, снятый с телефона."}
           </p>
 
           <a

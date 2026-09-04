@@ -7,14 +7,8 @@ import {
   Send,
   User,
   Home,
-  Moon,
-  Sun,
 } from "lucide-react";
-interface NavbarProps {
-  theme: "light" | "dark";
-  toggleTheme: () => void;
-}
-const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
+const Navbar: React.FC = () => {
   const t = useT();
   const [lang, setLang] = useLang();
   const [isVisible, setIsVisible] = useState(true);
@@ -85,24 +79,6 @@ const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
             {lang.toUpperCase()}
           </span>
           <span className={tooltipClass}>{t.nav.language}</span>
-        </button>
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            toggleTheme();
-            handleAction();
-          }}
-          className={itemBaseClass}
-          aria-label="Toggle theme"
-        >
-          {theme === "light" ? (
-            <Moon className="h-5 w-5 md:h-6 md:w-6" />
-          ) : (
-            <Sun className="h-5 w-5 md:h-6 md:w-6" />
-          )}
-          <span className={tooltipClass}>
-            {theme === "light" ? t.nav.darkMode : t.nav.lightMode}
-          </span>
         </button>
       </div>
     </nav>

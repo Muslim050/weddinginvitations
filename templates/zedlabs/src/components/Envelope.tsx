@@ -64,11 +64,11 @@ const Envelope: React.FC<EnvelopeProps> = ({ onOpen, config }) => {
                 {t.envelope.weddingOf}
               </span>
               <h1 className="relative left-1/2 w-[92vw] max-w-6xl -translate-x-1/2 text-balance font-serif text-[clamp(2.5rem,7vw,6.5rem)] leading-[1.05] tracking-tight text-white italic">
-                {config.couple.bride.name}
+                {config.couple.groom.name}
                 <span className="text-accent/30 mx-4 font-sans not-italic md:mx-8">
                   &
                 </span>
-                {config.couple.groom.name}
+                {config.couple.bride.name}
               </h1>
             </div>
           </div>
