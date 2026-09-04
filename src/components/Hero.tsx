@@ -7,21 +7,13 @@ import { price } from "@/lib/site";
 import { PRICES } from "@/lib/pricing";
 import { promises } from "@/lib/promises";
 
-const views = [
-  { key: "chinor-ru", label: "Chinor", lang: "ru", shot: shots.chinorHero },
-  { key: "chinor-uz", label: "Chinor", lang: "uz", shot: shots.chinorHeroUz },
-  { key: "nur-ru", label: "Nur", lang: "ru", shot: shots.nurWelcome },
-] as const;
+const views = {
+  Chinor: shots.chinorHero,
+  Nur: shots.nurWelcome,
+} as const;
 
 export default function Hero() {
-  const [tpl, setTpl] = useState<"Chinor" | "Nur">("Chinor");
-  const [lang, setLang] = useState<"ru" | "uz">("ru");
-
-  // У Nur снят только русский экран — переключатель языка показываем для Chinor
-  const view =
-    views.find((v) => v.label === tpl && v.lang === lang) ??
-    views.find((v) => v.label === tpl) ??
-    views[0];
+  const [tpl, setTpl] = useState<keyof typeof views>("Chinor");
 
   return (
     <section className="relative overflow-hidden pb-14 sm:pb-24">
@@ -46,8 +38,8 @@ export default function Hero() {
           </h1>
 
           <p className="mt-3.5 max-w-md text-[0.98rem] leading-snug text-ash sm:text-lg sm:leading-relaxed">
-            Гость видит своё имя, никох и той, строит маршрут и отвечает: буду
-            или нет.
+            Никох и той с адресами и таймингом, маршрут в навигаторе и ответ
+            гостя в один тап: буду или нет.
           </p>
 
           <div className="mt-4 flex flex-wrap items-baseline gap-x-3 gap-y-1 rounded-2xl border border-sand bg-cream/50 px-4 py-3 sm:px-5 sm:py-4">
@@ -76,10 +68,10 @@ export default function Hero() {
 
         {/* Настоящий экран шаблона, а не рисунок */}
         <div className="mx-auto w-full max-w-[18rem]">
-          <Screen shot={view.shot} priority sizes="(max-width: 640px) 68vw, 288px" />
+          <Screen shot={views[tpl]} priority sizes="(max-width: 640px) 68vw, 288px" />
 
           <div className="mt-4 flex items-center justify-center gap-2">
-            {(["Chinor", "Nur"] as const).map((name) => (
+            {(Object.keys(views) as (keyof typeof views)[]).map((name) => (
               <button
                 key={name}
                 type="button"
@@ -93,22 +85,10 @@ export default function Hero() {
                 {name}
               </button>
             ))}
-
-            {tpl === "Chinor" && (
-              <button
-                type="button"
-                onClick={() => setLang(lang === "ru" ? "uz" : "ru")}
-                className="rounded-full border border-sand px-4 py-2 text-xs text-muted transition-colors hover:border-ink/30 hover:text-ink"
-                aria-label="Показать приглашение на другом языке"
-              >
-                {lang === "ru" ? "показать UZ" : "показать RU"}
-              </button>
-            )}
           </div>
 
           <p className="mt-3 text-center text-xs leading-relaxed text-muted">
             Настоящий экран шаблона, снятый с телефона.
-            {tpl === "Chinor" && " Нажмите «показать UZ» — то же приглашение на узбекском."}
           </p>
 
           <a

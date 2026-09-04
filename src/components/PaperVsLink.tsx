@@ -5,13 +5,13 @@ import { price } from "@/lib/site";
 import { PRICES } from "@/lib/pricing";
 
 /**
- * Денежный якорь: с чем сравнить 450 000 сум.
+ * Денежный якорь: с чем сравнить цену приглашения.
  * Цифры редактируемые и намеренно консервативные. Если при введённых числах
  * бумага выходит дешевле — блок честно это признаёт, а не подтасовывает.
  */
 export default function PaperVsLink() {
-  const [count, setCount] = useState(250);
-  const [perCard, setPerCard] = useState(4000);
+  const [count, setCount] = useState(300);
+  const [perCard, setPerCard] = useState(10_000);
 
   const paper = count * perCard;
   const link = PRICES.chinor;
@@ -42,7 +42,7 @@ export default function PaperVsLink() {
               <input
                 type="range"
                 min={50}
-                max={600}
+                max={1000}
                 step={10}
                 value={count}
                 onChange={(e) => setCount(Number(e.target.value))}
@@ -60,7 +60,7 @@ export default function PaperVsLink() {
               <input
                 type="range"
                 min={1000}
-                max={15000}
+                max={30000}
                 step={500}
                 value={perCard}
                 onChange={(e) => setPerCard(Number(e.target.value))}

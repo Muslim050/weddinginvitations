@@ -3,43 +3,40 @@
 import { useEffect, useState } from "react";
 import { site } from "@/lib/site";
 import { templates } from "@/lib/templates";
-import { plans } from "@/lib/pricing";
 
-const PLAN_NAMES = plans.map((p) => p.name);
+const TEMPLATE_NAMES = templates.map((t) => t.name);
 
 export default function OrderForm() {
   const [form, setForm] = useState({
     name: "",
     contact: "",
-    plan: PLAN_NAMES[0],
-    template: templates[0].name,
+    template: TEMPLATE_NAMES[0],
     date: "",
     guests: "",
     comment: "",
   });
   const [copied, setCopied] = useState(false);
 
-  // Тариф, выбранный в блоке цен, доезжает сюда
+  // Шаблон, выбранный в блоке цен, доезжает сюда
   useEffect(() => {
     const apply = (name: string) => {
-      if (PLAN_NAMES.includes(name)) setForm((f) => ({ ...f, plan: name }));
+      if (TEMPLATE_NAMES.includes(name)) setForm((f) => ({ ...f, template: name }));
     };
     try {
-      const saved = sessionStorage.getItem("nikoh:plan");
+      const saved = sessionStorage.getItem("nikoh:template");
       if (saved) apply(saved);
     } catch {
       // приватный режим
     }
     const onPick = (e: Event) => apply((e as CustomEvent<string>).detail);
-    window.addEventListener("nikoh:plan", onPick);
-    return () => window.removeEventListener("nikoh:plan", onPick);
+    window.addEventListener("nikoh:template", onPick);
+    return () => window.removeEventListener("nikoh:template", onPick);
   }, []);
 
   const message = [
     "Здравствуйте! Хочу приглашение на свадьбу.",
     `Имя: ${form.name || "—"}`,
     `Связь: ${form.contact || "—"}`,
-    `Тариф: ${form.plan}`,
     `Шаблон: ${form.template}`,
     `Дата свадьбы: ${form.date || "—"}`,
     form.guests ? `Гостей: ${form.guests}` : "",
@@ -107,21 +104,6 @@ export default function OrderForm() {
 
         <label className="block">
           <span className="mb-2 block text-xs tracking-[0.14em] uppercase text-muted">
-            Тариф
-          </span>
-          <select
-            className={field}
-            value={form.plan}
-            onChange={(e) => setForm({ ...form, plan: e.target.value })}
-          >
-            {PLAN_NAMES.map((n) => (
-              <option key={n}>{n}</option>
-            ))}
-          </select>
-        </label>
-
-        <label className="block">
-          <span className="mb-2 block text-xs tracking-[0.14em] uppercase text-muted">
             Шаблон
           </span>
           <select
@@ -129,8 +111,8 @@ export default function OrderForm() {
             value={form.template}
             onChange={(e) => setForm({ ...form, template: e.target.value })}
           >
-            {templates.map((t) => (
-              <option key={t.slug}>{t.name}</option>
+            {TEMPLATE_NAMES.map((n) => (
+              <option key={n}>{n}</option>
             ))}
             <option>Пока не выбрал(а)</option>
           </select>

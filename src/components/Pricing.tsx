@@ -4,14 +4,14 @@ import { plans, price } from "@/lib/pricing";
 import { promises } from "@/lib/promises";
 
 export default function Pricing() {
-  /** Выбранный тариф доезжает до формы заявки — иначе продавец не узнает, что выбрали. */
+  /** Выбранный шаблон доезжает до формы заявки — иначе продавец не узнает, что выбрали. */
   const choose = (name: string) => {
     try {
-      sessionStorage.setItem("nikoh:plan", name);
+      sessionStorage.setItem("nikoh:template", name);
     } catch {
       // приватный режим — не критично, форма просто останется на значении по умолчанию
     }
-    window.dispatchEvent(new CustomEvent("nikoh:plan", { detail: name }));
+    window.dispatchEvent(new CustomEvent("nikoh:template", { detail: name }));
   };
 
   return (
@@ -22,13 +22,13 @@ export default function Pricing() {
           Стоимость
         </span>
         <h2 className="mt-5 max-w-2xl font-display text-[clamp(1.9rem,6vw,3.4rem)] leading-tight">
-          Цена не зависит от числа гостей
+          Два шаблона, две цены
         </h2>
         <p className="mt-4 max-w-xl text-lg text-ash">
           {promises.free}. {promises.payment}.
         </p>
 
-        <div className="mt-10 grid gap-5 lg:grid-cols-3">
+        <div className="mt-10 grid gap-5 lg:max-w-4xl lg:grid-cols-2">
           {plans.map((plan) => (
             <article
               key={plan.id}

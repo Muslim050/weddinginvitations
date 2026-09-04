@@ -1,4 +1,5 @@
 import { PRICES } from "./pricing";
+import { shots, type Shot } from "./shots";
 
 export type Template = {
   slug: "chinor" | "nur";
@@ -11,6 +12,11 @@ export type Template = {
   /** Подложка карточки в каталоге. */
   panel: string;
   features: string[];
+  /**
+   * Экраны шаблона по порядку сверху вниз. В просмотре «на весь экран» они
+   * стоят встык и листаются — так видно всё приглашение, а не один кадр.
+   */
+  gallery: Shot[];
 };
 
 export const templates: Template[] = [
@@ -21,9 +27,10 @@ export const templates: Template[] = [
     demoUrl: process.env.NEXT_PUBLIC_DEMO_CHINOR ?? "",
     price: PRICES.chinor,
     description:
-      "Спокойная классика для никоха и тоя: конверт с именем гостя, таймер, история пары, карта и книга пожеланий.",
+      "Спокойная классика для никоха и тоя: таймер до свадьбы, история пары, карта и книга пожеланий.",
     panel: "linear-gradient(180deg,#1c2440 0%,#0d1120 100%)",
     features: ["Светлая и тёмная тема", "Анкета гостя", "QR для гостей", "Панель управления"],
+    gallery: [shots.chinorHero, shots.chinorEvent, shots.chinorRsvp, shots.chinorHeroUz],
   },
   {
     slug: "nur",
@@ -35,6 +42,7 @@ export const templates: Template[] = [
       "Полноэкранные вертикальные слайды, видео-история и онлайн-трансляция. Смотрится дорого на телефоне.",
     panel: "linear-gradient(180deg,#221d19 0%,#131110 100%)",
     features: ["Тёмная тема", "Полноэкранные слайды", "Видео и трансляция", "Пожелания гостей"],
+    gallery: [shots.nurWelcome, shots.nurDate],
   },
 ];
 

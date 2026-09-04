@@ -1,14 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import Screen from "./Screen";
+import LiveScreen from "./LiveScreen";
 import { shots } from "@/lib/shots";
+import { getTemplate } from "@/lib/templates";
 
 const steps = [
   {
-    title: "Гость видит своё имя",
-    text: "Каждому уходит своя ссылка. Открывается конверт, и внутри — обращение лично к нему, а не «дорогие гости».",
-    shot: shots.chinorEnvelope,
+    title: "Открывает приглашение",
+    text: "Одна ссылка приходит в Telegram. Гость нажимает — и вместо файла в чате открывается живое приглашение с вашими именами, датой и таймером.",
+    shot: shots.chinorHero,
   },
   {
     title: "Понимает, когда и куда",
@@ -29,6 +30,7 @@ const steps = [
 
 export default function Tour() {
   const [step, setStep] = useState(0);
+  const chinor = getTemplate("chinor");
 
   return (
     <section id="tour" className="scroll-mt-20 py-16 sm:py-24">
@@ -81,9 +83,16 @@ export default function Tour() {
           </ol>
 
           <div className="order-1 mx-auto w-full max-w-[18rem] lg:order-2 lg:sticky lg:top-24">
-            <Screen shot={steps[step].shot} glow={false} sizes="(max-width: 640px) 68vw, 288px" />
-            <p className="mt-3 text-center text-xs text-muted">
-              Экран {step + 1} из {steps.length} — снято с реального шаблона
+            <LiveScreen
+              src={chinor?.demoUrl ?? ""}
+              title="Живое приглашение Chinor"
+              fallback={steps[step].shot}
+              sizes="(max-width: 640px) 68vw, 288px"
+            />
+            <p className="mt-3 text-center text-xs leading-relaxed text-muted">
+              {chinor?.demoUrl
+                ? "Это не картинка — настоящее приглашение. Листайте и нажимайте прямо здесь."
+                : `Экран ${step + 1} из ${steps.length} — снято с реального шаблона`}
             </p>
           </div>
         </div>

@@ -1,13 +1,28 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import Screen from "./Screen";
+import LiveScreen from "./LiveScreen";
 import { shots } from "@/lib/shots";
 import { templates, type Template } from "@/lib/templates";
 import { price } from "@/lib/site";
 
 export default function Catalog() {
   const [full, setFull] = useState<Template | null>(null);
+
+  // Пока открыт просмотр, страница под ним не должна уезжать вместе с пальцем.
+  useEffect(() => {
+    if (!full) return;
+    const { overflow } = document.body.style;
+    document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setFull(null);
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = overflow;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [full]);
 
   return (
     <section id="templates" className="scroll-mt-20 border-t border-sand bg-cream/40 py-16 sm:py-24">
@@ -69,24 +84,13 @@ export default function Catalog() {
                 </ul>
 
                 <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-                  {t.demoUrl ? (
-                    <a
-                      href={t.demoUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="flex-1 rounded-full bg-ink px-6 py-3.5 text-center text-sm font-medium text-ivory transition-transform hover:-translate-y-0.5"
-                    >
-                      Открыть демо
-                    </a>
-                  ) : (
-                    <button
-                      type="button"
-                      onClick={() => setFull(t)}
-                      className="flex-1 rounded-full bg-ink px-6 py-3.5 text-center text-sm font-medium text-ivory transition-transform hover:-translate-y-0.5"
-                    >
-                      Показать на весь экран
-                    </button>
-                  )}
+                  <button
+                    type="button"
+                    onClick={() => setFull(t)}
+                    className="flex-1 rounded-full bg-ink px-6 py-3.5 text-center text-sm font-medium text-ivory transition-transform hover:-translate-y-0.5"
+                  >
+                    {t.demoUrl ? "Открыть демо" : "Показать на весь экран"}
+                  </button>
                   <a
                     href="#order"
                     className="flex-1 rounded-full border border-ink/20 px-6 py-3.5 text-center text-sm font-medium transition-colors hover:border-ink hover:bg-cream"
@@ -100,30 +104,69 @@ export default function Catalog() {
         </div>
       </div>
 
-      {/* Демо ещё не выложено — показываем макет на весь экран, не уводя со страницы */}
-      {full && (
+      {/*
+        Демо ещё не выложено. Вместо одного кадра показываем все экраны шаблона
+        встык внутри рамки телефона — приглашение листается так же, как у гостя.
+
+        Портал в body обязателен: `main > section` анимируется через
+        `animation-timeline: view()`, а transform на предке делает секцию
+        containing block для position: fixed. Без портала «весь экран»
+        оказывается высотой с секцию и уезжает вместе с ней.
+      */}
+      {full &&
+        createPortal(
         <div
           role="dialog"
           aria-modal="true"
           aria-label={`Приглашение ${full.name}`}
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-ink/80 p-4 backdrop-blur-sm"
+          className="fixed inset-0 z-[100] flex flex-col items-center justify-center gap-4 bg-ink/85 p-4 backdrop-blur-sm"
           onClick={() => setFull(null)}
         >
-          <div className="w-full max-w-[19rem]" onClick={(e) => e.stopPropagation()}>
-            <Screen
-              shot={full.slug === "chinor" ? shots.chinorHero : shots.nurWelcome}
+          <div
+            className="flex min-h-0 w-full max-w-[19rem] flex-1 items-center"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <LiveScreen
+              src={full.demoUrl}
+              title={`Живое приглашение ${full.name}`}
+              fallback={full.gallery[0]}
               sizes="304px"
+              className="w-full"
             />
-            <button
-              type="button"
-              onClick={() => setFull(null)}
-              className="mx-auto mt-5 block rounded-full bg-ivory px-6 py-2.5 text-sm font-medium text-ink"
-            >
-              Закрыть
-            </button>
           </div>
-        </div>
-      )}
+
+          <div
+            className="flex flex-none flex-col items-center gap-3"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <p className="text-xs text-ivory/60">
+              {full.demoUrl
+                ? "Это настоящее приглашение — листайте и нажимайте"
+                : "Демо ещё не выложено — это снимок шаблона"}
+            </p>
+            <div className="flex items-center gap-3">
+              {full.demoUrl && (
+                <a
+                  href={full.demoUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="rounded-full border border-ivory/30 px-6 py-2.5 text-sm font-medium text-ivory"
+                >
+                  Открыть в новой вкладке
+                </a>
+              )}
+              <button
+                type="button"
+                onClick={() => setFull(null)}
+                className="rounded-full bg-ivory px-6 py-2.5 text-sm font-medium text-ink"
+              >
+                Закрыть
+              </button>
+            </div>
+          </div>
+        </div>,
+          document.body,
+        )}
     </section>
   );
 }

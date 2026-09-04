@@ -14,10 +14,6 @@ export type Shot = {
 };
 
 export const shots = {
-  chinorEnvelope: {
-    src: "/shots/chinor-envelope.jpg",
-    alt: "Конверт приглашения Chinor с именем гостя",
-  },
   chinorHero: {
     src: "/shots/chinor-hero.jpg",
     alt: "Приглашение Chinor: имена, дата и таймер до свадьбы",
