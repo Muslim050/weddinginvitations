@@ -42,4 +42,20 @@ export const shots = {
     src: "/shots/nafis-hero.jpg",
     alt: "Приглашение Nafis: акварельный свиток с именами молодожёнов",
   },
+  oudHero: {
+    src: "/shots/oud-hero.jpg",
+    alt: "Приглашение Oud: дворцовый конверт с золотой печатью",
+  },
+  azureHero: {
+    src: "/shots/azure-hero.jpg",
+    alt: "Приглашение Azure: современная голубая фотокомпозиция",
+  },
+  lumiHero: {
+    src: "/shots/light-hero.jpg",
+    alt: "Приглашение Lumi: светлая минималистичная фотокомпозиция",
+  },
+  gardenHero: {
+    src: "/shots/garden-hero.jpg",
+    alt: "Приглашение Garden: цветочный конверт с бордовой печатью",
+  },
 } as const satisfies Record<string, Shot>;
