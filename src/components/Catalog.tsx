@@ -29,7 +29,7 @@ export default function Catalog() {
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         <span className="eyebrow inline-flex items-center gap-3 text-bronze">
           <span className="rule" />
-          Три шаблона
+          Семь шаблонов
         </span>
         <h2 className="mt-5 max-w-2xl font-display text-[clamp(1.9rem,6vw,3.4rem)] leading-tight">
           Выберите характер вечера
@@ -38,7 +38,7 @@ export default function Catalog() {
           Имена, дата, фотографии и адреса будут ваши. Структура останется той же.
         </p>
 
-        <div className="mt-10 grid gap-6 lg:grid-cols-3">
+        <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
           {templates.map((t) => (
             <article
               key={t.slug}

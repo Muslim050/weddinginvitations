@@ -6,6 +6,33 @@ import { templates } from "@/lib/templates";
 
 const TEMPLATE_NAMES = templates.map((t) => t.name);
 
+/**
+ * Маска телефона. На вход берём только цифры — буквы и мусор в поле не попадают
+ * вовсе, поэтому набрать что-то нечитаемое невозможно.
+ *
+ * Код страны показываем сами, но храним вместе с номером: пустое поле остаётся
+ * пустым, иначе `+998` нельзя было бы стереть и placeholder никогда бы не
+ * показался.
+ */
+function formatPhone(value: string): string {
+  let digits = value.replace(/\D/g, "");
+
+  /*
+   * Код страны снимаем всегда: он уже стоит в поле, и на каждое нажатие его
+   * цифры возвращаются во ввод вместе с номером. Не отрезать их — значит
+   * после второй же цифры собирать номер из «998» и того, что набрал человек.
+   */
+  if (digits.startsWith("998")) digits = digits.slice(3);
+  digits = digits.slice(0, 9);
+  if (!digits) return "";
+
+  let out = "+998 " + digits.slice(0, 2);
+  if (digits.length > 2) out += " " + digits.slice(2, 5);
+  if (digits.length > 5) out += "-" + digits.slice(5, 7);
+  if (digits.length > 7) out += "-" + digits.slice(7, 9);
+  return out;
+}
+
 export default function OrderForm() {
   const [form, setForm] = useState({
     name: "",
@@ -16,6 +43,11 @@ export default function OrderForm() {
     comment: "",
   });
   const [copied, setCopied] = useState(false);
+  /** Ловушка для ботов: настоящий человек это поле не увидит и не заполнит. */
+  const [website, setWebsite] = useState("");
+  const [sending, setSending] = useState(false);
+  const [sent, setSent] = useState(false);
+  const [failed, setFailed] = useState(false);
 
   // Шаблон, выбранный в блоке цен, доезжает сюда
   useEffect(() => {
@@ -70,11 +102,49 @@ export default function OrderForm() {
     window.open(`${site.whatsapp}?text=${encodeURIComponent(message)}`, "_blank", "noopener");
   };
 
+  /**
+   * Основной путь: заявка уходит владельцу в Telegram сама. Если сервер не
+   * настроен или не ответил, показываем ручные кнопки — потерять заявку хуже,
+   * чем попросить человека написать самому.
+   */
+  const send = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (sending) return;
+
+    setSending(true);
+    setFailed(false);
+    try {
+      const response = await fetch("/api/order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...form, website }),
+      });
+      if (!response.ok) throw new Error(String(response.status));
+      setSent(true);
+    } catch {
+      setFailed(true);
+    } finally {
+      setSending(false);
+    }
+  };
+
   const field =
     "w-full rounded-2xl border border-sand bg-ivory px-4 py-3.5 text-ink outline-none transition-colors placeholder:text-muted/60 focus:border-bronze focus-visible:ring-2 focus-visible:ring-bronze/30";
 
+  if (sent) {
+    return (
+      <div className="rounded-2xl border border-sand bg-cream/60 px-6 py-8 text-center">
+        <p className="font-display text-2xl">Заявка ушла</p>
+        <p className="mt-2 text-sm leading-relaxed text-ash">
+          Напишу вам {form.contact ? `на ${form.contact}` : "в ближайшее время"} и
+          пришлю черновик с вашими именами.
+        </p>
+      </div>
+    );
+  }
+
   return (
-    <form onSubmit={(e) => e.preventDefault()} className="space-y-4">
+    <form onSubmit={send} className="space-y-4">
       <div className="grid gap-4 sm:grid-cols-2">
         <label className="block">
           <span className="mb-2 block text-xs tracking-[0.14em] uppercase text-muted">
@@ -91,14 +161,32 @@ export default function OrderForm() {
 
         <label className="block">
           <span className="mb-2 block text-xs tracking-[0.14em] uppercase text-muted">
-            Телефон или Telegram
+            Телефон
           </span>
           <input
             required
             className={field}
             placeholder="+998 90 123-45-67"
+            type="tel"
+            inputMode="tel"
+            autoComplete="tel"
             value={form.contact}
-            onChange={(e) => setForm({ ...form, contact: e.target.value })}
+            onChange={(e) => {
+              const next = formatPhone(e.target.value);
+              /*
+               * Backspace на разделителе иначе не двигается с места: маска
+               * возвращает ту же строку. Раз ввод стал короче, а результат
+               * прежний — убираем последнюю цифру, как человек и хотел.
+               */
+              const erasing = e.target.value.length < form.contact.length;
+              setForm({
+                ...form,
+                contact:
+                  erasing && next === form.contact
+                    ? formatPhone(next.replace(/\d(?=\D*$)/, ""))
+                    : next,
+              });
+            }}
           />
         </label>
 
@@ -157,37 +245,62 @@ export default function OrderForm() {
         />
       </label>
 
-      {site.configured ? (
-        <>
-          <div className="flex flex-col gap-3 pt-2 sm:flex-row">
+      {/* Поле-ловушка. Скрыто от людей и от скринридеров, видно только ботам. */}
+      <div aria-hidden className="hidden">
+        <label>
+          Не заполняйте это поле
+          <input
+            type="text"
+            tabIndex={-1}
+            autoComplete="off"
+            value={website}
+            onChange={(e) => setWebsite(e.target.value)}
+          />
+        </label>
+      </div>
+
+      <button
+        type="submit"
+        disabled={sending}
+        className="w-full rounded-full bg-ink px-6 py-4 font-medium text-ivory transition-transform hover:-translate-y-0.5 disabled:opacity-60 disabled:hover:translate-y-0"
+      >
+        {sending ? "Отправляю…" : "Отправить заявку"}
+      </button>
+
+      <p aria-live="polite" className="pt-1 text-xs leading-relaxed text-muted">
+        {failed
+          ? "Не получилось отправить. Напишите мне сами — кнопки ниже, текст заявки уже собран."
+          : "Отвечу в течение дня. Аванса нет: сначала черновик, потом оплата."}
+      </p>
+
+      {/* Запасной путь. Нужен, когда сервер не ответил или контакты — привычнее. */}
+      {site.configured && (
+        <div className={failed ? "" : "border-t border-sand pt-4"}>
+          {!failed && (
+            <p className="pb-3 text-xs text-muted">Или напишите напрямую:</p>
+          )}
+          <div className="flex flex-col gap-3 sm:flex-row">
             <button
               type="button"
               onClick={openTelegram}
-              className="flex-1 rounded-full bg-ink px-6 py-4 font-medium text-ivory transition-transform hover:-translate-y-0.5"
+              className="flex-1 rounded-full border border-ink/20 px-6 py-3.5 font-medium transition-colors hover:border-ink hover:bg-cream"
             >
               Написать в Telegram
             </button>
             <button
               type="button"
               onClick={openWhatsApp}
-              className="flex-1 rounded-full border border-ink/20 px-6 py-4 font-medium transition-colors hover:border-ink hover:bg-cream"
+              className="flex-1 rounded-full border border-ink/20 px-6 py-3.5 font-medium transition-colors hover:border-ink hover:bg-cream"
             >
               Написать в WhatsApp
             </button>
           </div>
-
-          <p aria-live="polite" className="pt-1 text-xs leading-relaxed text-muted">
-            {copied
-              ? "Текст заявки скопирован — вставьте его в открывшийся чат."
-              : "Telegram не умеет подставлять текст в личный чат, поэтому заявка копируется в буфер обмена, а вы вставляете её одним движением."}
-          </p>
-        </>
-      ) : (
-        <p className="rounded-2xl border border-dashed border-sand bg-cream/60 px-5 py-4 text-sm text-ash">
-          Контакты ещё не подключены. Задайте <code>NEXT_PUBLIC_TELEGRAM</code> и{" "}
-          <code>NEXT_PUBLIC_PHONE</code> в переменных окружения — до этого кнопки
-          скрыты, чтобы заявка не уходила в никуда.
-        </p>
+          {copied && (
+            <p className="pt-2 text-xs text-muted">
+              Текст заявки скопирован — вставьте его в открывшийся чат.
+            </p>
+          )}
+        </div>
       )}
     </form>
   );

@@ -142,7 +142,7 @@ export default function Tour() {
               sizes="(max-width: 640px) 68vw, 288px"
             />
 
-            <div className="mt-4 flex items-center justify-center gap-2">
+            <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
               {templates.map((t) => (
                 <button
                   key={t.slug}

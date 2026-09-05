@@ -2,7 +2,7 @@ import { PRICES } from "./pricing";
 import { shots, type Shot } from "./shots";
 
 export type Template = {
-  slug: "chinor" | "nur" | "nafis";
+  slug: "chinor" | "nur" | "nafis" | "oud" | "azure" | "lumi" | "garden";
   name: string;
   style: string;
   /** Публичный адрес демо. Пустая строка = демо ещё не выложено. */
@@ -55,6 +55,54 @@ export const templates: Template[] = [
     panel: "linear-gradient(180deg,#f3e9e5 0%,#d7c0b7 100%)",
     features: ["Анимация свитка", "Фоновая музыка", "Русский и узбекский", "Календарь и RSVP"],
     gallery: [shots.nafisHero],
+  },
+  {
+    slug: "oud",
+    name: "Oud",
+    style: "Дворцовый · золотой",
+    demoUrl: "/demo/reveal/index.html?theme=oud",
+    price: PRICES.oud,
+    description:
+      "Торжественное приглашение с дворцовой архитектурой, золотой печатью и кинематографичным видео-вступлением.",
+    panel: "linear-gradient(180deg,#c9ab82 0%,#725a3b 100%)",
+    features: ["Видео-вступление", "Золотая печать", "Музыка", "RU и UZ"],
+    gallery: [shots.oudHero],
+  },
+  {
+    slug: "azure",
+    name: "Azure",
+    style: "Современный · воздушный",
+    demoUrl: "/demo/reveal/index.html?theme=azure",
+    price: PRICES.azure,
+    description:
+      "Воздушный минимализм с голубым акцентом, крупными фотографиями и чистой журнальной типографикой.",
+    panel: "linear-gradient(180deg,#dff2fb 0%,#70b7d8 100%)",
+    features: ["Фотогалерея", "Обратный отсчёт", "Календарь", "RSVP"],
+    gallery: [shots.azureHero],
+  },
+  {
+    slug: "lumi",
+    name: "Lumi",
+    style: "Светлый · редакционный",
+    demoUrl: "/demo/reveal/index.html?theme=light",
+    price: PRICES.lumi,
+    description:
+      "Светлый конверт с восковой печатью, сдержанная фотоподача и мягкая современная композиция.",
+    panel: "linear-gradient(180deg,#f4f2ed 0%,#cfc8bc 100%)",
+    features: ["Анимация конверта", "Фото пары", "Дресс-код", "RU и UZ"],
+    gallery: [shots.lumiHero],
+  },
+  {
+    slug: "garden",
+    name: "Garden",
+    style: "Цветочный · классический",
+    demoUrl: "/demo/reveal/index.html?theme=garden",
+    price: PRICES.garden,
+    description:
+      "Роскошный цветочный сад, бордовая сургучная печать и романтичная композиция в классическом стиле.",
+    panel: "linear-gradient(180deg,#f4ead4 0%,#7d2530 100%)",
+    features: ["Цветочный конверт", "Музыка", "Программа вечера", "RSVP"],
+    gallery: [shots.gardenHero],
   },
 ];
 

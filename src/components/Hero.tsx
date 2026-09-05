@@ -8,7 +8,7 @@ import { promises } from "@/lib/promises";
 import { templates } from "@/lib/templates";
 
 /** Витрина первого экрана: с чего начинается знакомство с продуктом. */
-const DEFAULT_SLUG = "nafis";
+const DEFAULT_SLUG = "oud";
 
 export default function Hero() {
   const [slug, setSlug] = useState<string>(DEFAULT_SLUG);
@@ -78,7 +78,7 @@ export default function Hero() {
             sizes="(max-width: 640px) 68vw, 288px"
           />
 
-          <div className="mt-4 flex items-center justify-center gap-2">
+          <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
             {templates.map((t) => (
               <button
                 key={t.slug}

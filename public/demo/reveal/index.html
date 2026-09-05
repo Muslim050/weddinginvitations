@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="uz">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+    <title>Azizbek va Madina — taklifnoma</title>
+    <link rel="stylesheet" href="/demo/reveal/reveal.css" />
+    <script type="module" src="/demo/reveal/reveal.js"></script>
+  </head>
+  <body>
+    <div class="invitation">
+      <header class="toolbar" aria-label="Настройки приглашения">
+        <div class="languages" role="group" aria-label="Язык">
+          <button type="button" data-language="uz" aria-pressed="true">UZ</button>
+          <button type="button" data-language="ru" aria-pressed="false">RU</button>
+        </div>
+        <button class="sound" id="sound" type="button" aria-label="Включить или выключить музыку">♪</button>
+      </header>
+
+      <main>
+        <section class="hero">
+          <div class="hero-media" aria-hidden="true">
+            <video id="hero-video" muted loop playsinline></video>
+            <img id="hero-image" alt="" />
+          </div>
+          <div class="hero-overlay"></div>
+          <div class="hero-copy">
+            <p class="kicker" data-copy="heroKicker">TO‘Y KUNI</p>
+            <h1><span data-copy="groom">Azizbek</span><i>&amp;</i><span data-copy="bride">Madina</span></h1>
+            <p class="hero-note" data-copy="heroNote">Ikki qalb · Bir taqdir</p>
+            <div class="hero-rule"></div>
+            <p class="date-line"><span data-copy="date">12-Sentabr, 2026</span><b>·</b><span>18:00</span></p>
+          </div>
+        </section>
+
+        <section class="section welcome reveal-on-scroll">
+          <p class="eyebrow" data-copy="welcomeLabel">AZIZ DO‘STLAR VA OILA</p>
+          <h2 data-copy="welcomeTitle">Sizni taklif qilamiz</h2>
+          <p data-copy="welcomeText">Hayotimizning eng quvonchli kunini siz bilan birga nishonlashni istaymiz.</p>
+          <img class="ornament ornament-welcome" id="welcome-ornament" alt="" />
+        </section>
+
+        <section class="section details reveal-on-scroll">
+          <div class="detail-card">
+            <p class="eyebrow" data-copy="whenLabel">SANA</p>
+            <h2 data-copy="whenTitle">Qachon?</h2>
+            <p class="detail-value"><span data-copy="date">12-Sentabr, 2026</span><br />18:00</p>
+          </div>
+          <div class="detail-card">
+            <p class="eyebrow" data-copy="whereLabel">MANZIL</p>
+            <h2 data-copy="whereTitle">Qayerda?</h2>
+            <p class="detail-value">Grand Emerald Hall<br /><span data-copy="city">Toshkent</span></p>
+          </div>
+        </section>
+
+        <section class="photo-break reveal-on-scroll">
+          <img id="story-image" alt="Azizbek va Madina" />
+        </section>
+
+        <section class="section program reveal-on-scroll">
+          <p class="eyebrow" data-copy="programLabel">BAYRAM DASTURI</p>
+          <h2 data-copy="programTitle">Tadbir dasturi</h2>
+          <ol>
+            <li><time>17:00</time><span data-copy="program1">Mehmonlarni kutib olish</span></li>
+            <li><time>18:00</time><span data-copy="program2">Nikoh marosimi</span></li>
+            <li><time>19:00</time><span data-copy="program3">Ziyofat</span></li>
+            <li><time>20:00</time><span data-copy="program4">Tort kesish</span></li>
+            <li><time>21:00</time><span data-copy="program5">Raqs va musiqa</span></li>
+          </ol>
+        </section>
+
+        <section class="countdown reveal-on-scroll">
+          <p class="eyebrow" data-copy="countdownLabel">TO‘YGA QADAR</p>
+          <div class="countdown-grid" id="countdown">
+            <span><b>00</b><small data-copy="days">KUN</small></span>
+            <span><b>00</b><small data-copy="hours">SOAT</small></span>
+            <span><b>00</b><small data-copy="minutes">DAQIQA</small></span>
+            <span><b>00</b><small data-copy="seconds">SONIYA</small></span>
+          </div>
+        </section>
+
+        <section class="section attire reveal-on-scroll">
+          <p class="eyebrow" data-copy="attireLabel">TAVSIYA</p>
+          <h2 data-copy="attireTitle">Kiyim tarzi</h2>
+          <p data-copy="attireText">Bayramimiz uslubiga mos nafis libos tanlasangiz, juda xursand bo‘lamiz.</p>
+          <div class="palette" aria-label="Рекомендуемые цвета"><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="attire-grid">
+            <article><img id="women-image" alt="" /><h3 data-copy="women">Ayollar</h3><p data-copy="womenText">Nafis kechki libos.</p></article>
+            <article><img id="men-image" alt="" /><h3 data-copy="men">Erkaklar</h3><p data-copy="menText">Klassik kostyum.</p></article>
+          </div>
+        </section>
+
+        <section class="section venue reveal-on-scroll">
+          <p class="eyebrow" data-copy="whereLabel">MANZIL</p>
+          <h2 data-copy="venueTitle">Grand Emerald Hall</h2>
+          <p data-copy="address">Toshkent, Yunusobod tumani</p>
+          <img id="venue-image" alt="Grand Emerald Hall" />
+          <div class="venue-actions">
+            <a href="https://yandex.uz/maps/?text=Toshkent%2C%20Yunusobod" target="_blank" rel="noopener" data-copy="map">Xaritada ko‘rish</a>
+            <button id="calendar" type="button" data-copy="calendar">Kalendarga</button>
+          </div>
+        </section>
+
+        <section class="section rsvp reveal-on-scroll">
+          <p class="eyebrow">RSVP</p>
+          <h2 data-copy="rsvpTitle">Ishtirokingizni tasdiqlang</h2>
+          <p data-copy="rsvpText">Bayramni yaxshi tayyorlashimiz uchun javobingizni oldindan bildiring.</p>
+          <form id="rsvp-form">
+            <label><input type="radio" name="attendance" value="yes" required /><span data-copy="rsvpYes">Ha, bajonidil!</span></label>
+            <label><input type="radio" name="attendance" value="no" /><span data-copy="rsvpNo">Afsuski, kela olmayman</span></label>
+            <input name="guest" required data-copy-placeholder="namePlaceholder" placeholder="Ismingiz va familiyangiz" />
+            <textarea name="wish" data-copy-placeholder="wishPlaceholder" placeholder="Tilak (ixtiyoriy)"></textarea>
+            <button type="submit" data-copy="send">Yuborish</button>
+            <output id="rsvp-status"></output>
+          </form>
+        </section>
+
+        <footer>
+          <img id="footer-image" alt="" />
+          <p class="footer-wish" data-copy="footerWish">Sizni ko‘rishni intiqlik bilan kutamiz!</p>
+          <p class="footer-names"><span data-copy="groom">Azizbek</span> <i>&amp;</i> <span data-copy="bride">Madina</span></p>
+          <a href="/" target="_top">Nikoh Invitations</a>
+        </footer>
+      </main>
+
+      <button class="cover" id="cover" type="button" aria-label="Открыть приглашение">
+        <video id="cover-video" muted playsinline></video>
+        <img id="cover-image" alt="" />
+        <span class="envelope-lines" aria-hidden="true"></span>
+        <span class="cover-seal"><img id="cover-seal" alt="" /><b>A&amp;M</b></span>
+        <span class="cover-copy">
+          <small data-copy="coverLabel">NIKOH TAKLIFNOMASI</small>
+          <strong data-copy="coverTitle">Siz taklif qilingansiz!</strong>
+          <em><span data-copy="groom">Azizbek</span> <i>&amp;</i> <span data-copy="bride">Madina</span></em>
+          <span class="cover-date" data-copy="date">12-Sentabr, 2026</span>
+          <span class="cover-action" data-copy="open">OCHISH UCHUN BOSING</span>
+        </span>
+      </button>
+
+      <audio id="music" src="/music/wedding-music.mp3" loop preload="none"></audio>
+    </div>
+  </body>
+</html>
