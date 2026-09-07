@@ -41,7 +41,7 @@ export default function PaperVsLink() {
               </div>
               <input
                 type="range"
-                min={50}
+                min={200}
                 max={1000}
                 step={10}
                 value={count}
@@ -59,8 +59,8 @@ export default function PaperVsLink() {
               </div>
               <input
                 type="range"
-                min={1000}
-                max={30000}
+                min={9500}
+                max={100000}
                 step={500}
                 value={perCard}
                 onChange={(e) => setPerCard(Number(e.target.value))}

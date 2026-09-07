@@ -23,7 +23,7 @@ export default function Pricing() {
           Стоимость
         </span>
         <h2 className="mt-5 max-w-2xl font-display text-[clamp(1.9rem,6vw,3.4rem)] leading-tight">
-          Три цены на семь шаблонов
+          Одна цена на любой шаблон
         </h2>
         <p className="mt-4 max-w-xl text-lg text-ash">
           {promises.free}. {promises.payment}.
@@ -42,7 +42,7 @@ export default function Pricing() {
           </ul>
         </div>
 
-        <div className="mt-5 grid gap-5 lg:grid-cols-3">
+        <div className={`mt-5 grid gap-5 ${tiers.length > 1 ? "lg:grid-cols-3" : "mx-auto max-w-2xl"}`}>
           {tiers.map((tier) => {
             const dark = tier.highlight;
             const single = tier.templates.length === 1;
