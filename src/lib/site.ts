@@ -29,7 +29,7 @@ function formatPhone(raw: string): string {
 }
 
 export const site = {
-  name: "Nikoh",
+  name: "MyNikoh",
   tagline: "Электронные пригласительные на свадьбу",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
 
