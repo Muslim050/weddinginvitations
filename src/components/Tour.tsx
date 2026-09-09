@@ -32,8 +32,11 @@ const steps = [
   },
 ];
 
+/** Витрина блока: с какого шаблона гость начинает знакомство. */
+const DEFAULT_SLUG = "oud";
+
 export default function Tour() {
-  const [slug, setSlug] = useState<string>(templates[0].slug);
+  const [slug, setSlug] = useState<string>(DEFAULT_SLUG);
   const [step, setStep] = useState(0);
   const [live, setLive] = useState(false);
   const frame = useRef<HTMLIFrameElement>(null);
